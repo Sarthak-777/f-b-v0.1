@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .inputForm {
+    @apply p-3 border rounded-md m-1 w-[94%];
+  }
+  .footerLang {
+    @apply mt-7 p-1 text-xs font-light cursor-pointer;
+  }
+  .footerShits {
+    @apply mt-3 p-2 text-xs font-light cursor-pointer;
+  }
+}
