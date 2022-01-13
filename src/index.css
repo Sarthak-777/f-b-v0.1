@@ -12,4 +12,16 @@
   .footerShits {
     @apply mt-3 p-2 text-xs font-light cursor-pointer;
   }
+  .headerIconsDiv {
+    @apply w-14 h-12 m-2 flex items-center justify-center hover:bg-gray-200 rounded-xl cursor-pointer;
+  }
+  .headerIcons {
+    @apply w-7 h-6;
+  }
+  .rightHeaderIconsOutDiv {
+    @apply m-1 h-10 w-10 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-gray-300;
+  }
+  .logOutMenuIconsDiv {
+    @apply m-1 h-8 w-8 flex justify-center items-center rounded-full bg-gray-200;
+  }
 }

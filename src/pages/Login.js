@@ -1,7 +1,28 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Footer from "../components/Footer";
+import firebaseContext from "../context/firebase";
+import * as ROUTES from "../constants/routes";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const history = useHistory();
+
+  const { firebase } = useContext(firebaseContext);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      history.push(ROUTES.DASHBOARD);
+      setError("");
+    } catch (e) {
+      setError(e.message);
+    }
+  };
   return (
     <div className="h-screen">
       <div className="h-4/5 bg-gray-100">
@@ -38,9 +59,9 @@ function Login() {
                       fill="#3379ec"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </div>
@@ -55,18 +76,28 @@ function Login() {
               <div className="rounded-xl mx-14 bg-white border-2 mt-16 p-5">
                 <form
                   method="POST"
+                  onSubmit={handleLogin}
                   className="flex flex-col border-b border-gray-300"
                 >
                   <input
                     type="text"
                     placeholder="Email address or phone number"
                     className="p-3 border rounded-md "
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    value={email}
                   />
                   <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     className="mt-3 p-3 border rounded-md "
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    value={password}
                   />
+                  {error && <p className="text-sm text-red-500">{error}</p>}
                   <button className="mt-4 w-full h-12 rounded-md bg-fbblue text-white text-xl font-semibold">
                     Log In
                   </button>
