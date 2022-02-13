@@ -7,10 +7,10 @@ function useUser() {
   const { user } = useContext(userContext);
   useEffect(() => {
     async function getUserData() {
-      const response = await getUserDataByUserId(user?.uid);
+      const [response] = await getUserDataByUserId(user?.uid);
       setLoggedUser(response);
     }
-    if (user) {
+    if (user?.uid) {
       getUserData();
     }
   }, [user]);

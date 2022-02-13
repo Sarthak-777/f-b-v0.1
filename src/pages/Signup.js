@@ -35,6 +35,7 @@ function Signup() {
           fullName: `${firstName} ${surname}`,
           emailAddress: email,
           following: [],
+          followers: [],
           friends: [],
           dateCreated: Date.now(),
           photos: [],

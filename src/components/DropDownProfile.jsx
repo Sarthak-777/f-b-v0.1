@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import firebaseContext from "../context/firebase";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
+import PropTypes from "prop-types";
 
 function DropDownProfile({ loggedUser: user, profileImg, profile, display }) {
   const history = useHistory();
@@ -19,19 +20,21 @@ function DropDownProfile({ loggedUser: user, profileImg, profile, display }) {
   };
 
   return (
-    <div className={`absolute top-13 right-3 ${!display ? "hidden" : null}`}>
+    <div className={`fixed  right-3 z-50 ${!display ? "hidden" : null}`}>
       <div className="h-[450px] w-[360px] bg-white rounded-xl border border-gray-200 shadow-sm ">
         <div className="py-2 mx-4 border-b border-gray-300 ">
-          <div className="flex p-2 w-full hover:bg-gray-100 rounded-xl cursor-pointer">
-            <img
-              src={`/images/avatar/${profileImg}.jpg`}
-              className="rounded-full h-16 w-16"
-            />
-            <div className="ml-4 flex flex-col justify-center">
-              <p className="font-medium">{profile}</p>
-              <p className="text-sm font-extralight">See your profile</p>
+          <Link to={`/p/${profileImg}`}>
+            <div className="flex p-2 w-full hover:bg-gray-100 rounded-xl cursor-pointer">
+              <img
+                src={`/images/avatar/${profileImg}.jpg`}
+                className="rounded-full h-16 w-16"
+              />
+              <div className="ml-4 flex flex-col justify-center">
+                <p className="font-medium">{profile}</p>
+                <p className="text-sm font-extralight">See your profile</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="py-2 mx-4 border-b border-gray-200">
           <div className="flex p-2 w-full hover:bg-gray-100 rounded-xl cursor-pointer">
@@ -194,3 +197,10 @@ function DropDownProfile({ loggedUser: user, profileImg, profile, display }) {
 }
 
 export default DropDownProfile;
+
+DropDownProfile.propTypes = {
+  loggedUser: PropTypes.object,
+  profileImg: PropTypes.string,
+  profile: PropTypes.string,
+  display: PropTypes.bool,
+};

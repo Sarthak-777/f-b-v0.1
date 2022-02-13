@@ -1,16 +1,6 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import firebaseReducer from "./firebaseReducer";
+import { createStore } from "redux";
+import photoReducer from "./photos/photoReducer";
 
-const reducer = combineReducers({
-  firebase: firebaseReducer,
-});
-
-const store = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
+const store = createStore(photoReducer);
 
 export default store;

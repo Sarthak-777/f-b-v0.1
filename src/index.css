@@ -24,4 +24,7 @@
   .logOutMenuIconsDiv {
     @apply m-1 h-8 w-8 flex justify-center items-center rounded-full bg-gray-200;
   }
+  .seeMore {
+    @apply h-10 w-10 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-gray-300;
+  }
 }
