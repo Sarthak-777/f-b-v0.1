@@ -5,17 +5,17 @@ import useUser from "../../hooks/use-user";
 import {
   handleLoggedUserFriends,
   handleLikesFirebase,
+  handlePostLikesFirebase,
 } from "../../services/firebase";
 import Comment from "./Comment";
 import { Link } from "react-router-dom";
 
 function Post({ photo }) {
+  console.log(photo);
   const [commentBox, setCommentBox] = useState(false);
   const [likedPhoto, setLikedPhoto] = useState(photo.userLikedPhoto);
   const [likes, setLikes] = useState(photo.likes.length);
   // const [] = useState
-
-  console.log(photo.likes.length);
 
   const { user } = useUser();
   // console.log(user);
@@ -23,7 +23,9 @@ function Post({ photo }) {
   const handleLikedPhotos = () => {
     setLikedPhoto(!likedPhoto);
     const handleLikes = async () => {
-      await handleLikesFirebase(photo.docId, user.userId, likedPhoto);
+      photo.type == "post"
+        ? await handlePostLikesFirebase(photo.docId, user.userId, likedPhoto)
+        : await handleLikesFirebase(photo.docId, user.userId, likedPhoto);
     };
     if (user) {
       handleLikes();
@@ -52,13 +54,18 @@ function Post({ photo }) {
           <ThreeDots />
         </div>
       </div>
-
-      <p className="px-3 text-sm ">{photo.caption}</p>
-      <img
-        src={photo.imageSrc}
-        alt="uploaded photo"
-        className="max-h-[650px] w-full"
-      />
+      {photo.type == "post" ? (
+        <p className="text-xl px-4 mx-1">{photo.post}</p>
+      ) : (
+        <div>
+          <p className="px-3 text-sm ">{photo.caption}</p>
+          <img
+            src={photo.imageSrc}
+            alt="uploaded photo"
+            className="max-h-[650px] w-full"
+          />
+        </div>
+      )}
       <div className="py-3 mx-4 flex justify-between border-b ">
         <div className="flex items-center">
           <img
@@ -110,7 +117,12 @@ function Post({ photo }) {
         </div>
       </div>
       {commentBox ? (
-        <Comment docId={photo.docId} user={user} comments={photo.comments} />
+        <Comment
+          docId={photo.docId}
+          user={user}
+          comments={photo.comments}
+          type={photo.type}
+        />
       ) : null}
     </div>
   );

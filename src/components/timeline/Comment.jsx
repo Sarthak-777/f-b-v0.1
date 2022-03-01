@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { addCommentFirebase } from "../../services/firebase";
+import {
+  addCommentFirebase,
+  addPostCommentFirebase,
+} from "../../services/firebase";
 
-function Comment({ docId, user, comments }) {
+function Comment({ docId, user, comments, type }) {
   const [commentValue, setCommentValue] = useState("");
   const [tempComment, setTempComment] = useState([]);
   // console.log(comments);
@@ -9,7 +12,9 @@ function Comment({ docId, user, comments }) {
   const handleCommentEnter = async (event) => {
     if (event.key === "Enter") {
       const enterComment = async () => {
-        await addCommentFirebase(docId, user.username, commentValue);
+        type == "post"
+          ? await addPostCommentFirebase(docId, user.username, commentValue)
+          : await addCommentFirebase(docId, user.username, commentValue);
       };
       if (user) {
         enterComment();

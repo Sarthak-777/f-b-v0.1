@@ -4,7 +4,6 @@ import { Facebook } from "react-content-loader";
 import Post from "./Post";
 
 function Feed({ photos }) {
-  console.log(photos);
   return (
     <div className="container my-3">
       {!photos ? (

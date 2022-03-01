@@ -112,9 +112,11 @@ function UserProfile({ user: userProfile }) {
                   Posts
                 </p>
               </Link>
-              <p className="cursor-pointer py-4 px-3 font-semibold text-gray-500 text-sm ">
-                About
-              </p>
+              <Link to={`${url}/about`}>
+                <p className="cursor-pointer py-4 px-3 font-semibold text-gray-500 text-sm ">
+                  About
+                </p>
+              </Link>
               <Link to={`${url}/friends`}>
                 <p className="cursor-pointer py-4 px-3 font-semibold text-gray-500 text-sm ">
                   Friends

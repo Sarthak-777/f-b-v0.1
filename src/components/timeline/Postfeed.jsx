@@ -18,7 +18,7 @@ function Postfeed({ username, userId }) {
   };
 
   return (
-    <div className="mt-10 ">
+    <div className="my-5">
       <div className="h-32 w-full bg-white rounded-lg ">
         <div className="flex py-4 mx-5 border-b ">
           <img

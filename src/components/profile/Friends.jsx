@@ -11,6 +11,7 @@ function Friends({ friends }) {
   const [userFriends, setUserFriends] = useState(null);
   const { user } = useUser();
   const [unfriend, setUnfriend] = useState(false);
+  console.log(friends);
   useEffect(() => {
     async function getFriends() {
       const friendProfile = [];

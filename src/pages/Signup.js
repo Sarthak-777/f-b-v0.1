@@ -40,6 +40,15 @@ function Signup() {
           dateCreated: Date.now(),
           photos: [],
           posts: [],
+          bio: [],
+          workplace: "",
+          college: "",
+          highschool: "",
+          CurrentLocation: "",
+          PermanentLocation: "",
+          relationship: "",
+          mobileNo: "",
+          nickname: "",
         });
       setError("");
       history.push(ROUTES.DASHBOARD);

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 function PhotoTab() {
-  const data = useSelector((state) => state);
+  const data = useSelector((state) => state.photo);
+  console.log(data);
   const { photos } = data;
   const [hover, setHover] = useState(false);
   console.log(photos);

@@ -111,6 +111,7 @@ export const submitInput = async (input, userId, postId) => {
     postsId: postId,
     userId: userId,
     post: input,
+    type: "post",
     likes: [],
     comments: [],
     userLatitude: "40.7128°",
@@ -158,10 +159,39 @@ export const handleLikesFirebase = async (docId, userId, toggleLiked) => {
     });
 };
 
+export const handlePostLikesFirebase = async (docId, userId, toggleLiked) => {
+  // console.log(userId);
+  const response = await firebase
+    .firestore()
+    .collection("posts")
+    .doc(docId)
+    .update({
+      likes: toggleLiked
+        ? FieldValue.arrayRemove({
+            userId: userId,
+          })
+        : FieldValue.arrayUnion(userId),
+    });
+};
+
 export const addCommentFirebase = async (docId, username, comment) => {
   const response = await firebase
     .firestore()
     .collection("photos")
+    .doc(docId)
+    .update({
+      comments: FieldValue.arrayUnion({
+        displayName: username,
+        comment,
+        likes: 0,
+      }),
+    });
+};
+
+export const addPostCommentFirebase = async (docId, username, comment) => {
+  const response = await firebase
+    .firestore()
+    .collection("posts")
     .doc(docId)
     .update({
       comments: FieldValue.arrayUnion({
@@ -230,4 +260,35 @@ export const removeUserFriend = async (
     .update({
       friends: FieldValue.arrayRemove(userId),
     });
+};
+
+export const addWorkplace = async (update, value, docId) => {
+  await firebase
+    .firestore()
+    .collection("users")
+    .doc(docId)
+    .update({
+      [update]: value,
+    });
+};
+
+export const getPostsByUserData = async (userId) => {
+  const response = await firebase
+    .firestore()
+    .collection("posts")
+    .where("userId", "==", userId)
+    .get();
+  const data = response.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+  return data;
+};
+//
+export const getProfileInfo = async (docId) => {
+  const response = await firebase
+    .firestore()
+    .collection("users")
+    .doc(docId)
+    .get();
 };
